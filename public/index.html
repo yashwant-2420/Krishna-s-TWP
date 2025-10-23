@@ -1744,30 +1744,30 @@ function openSettings() {
   
   
   
-  // // Disable right-click
-  // document.addEventListener("contextmenu", e => e.preventDefault());
+  // Disable right-click
+  document.addEventListener("contextmenu", e => e.preventDefault());
 
-  // // Block F12, Ctrl+Shift+I/J/C/U
-  // document.addEventListener("keydown", function(e) {
-  //   if (
-  //     e.key === "F12" || 
-  //     (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
-  //     (e.ctrlKey && e.key.toUpperCase() === "U")
-  //   ) {
-  //     e.preventDefault();
-  //     alert("This action is disabled.");
-  //   }
-  // });
+  // Block F12, Ctrl+Shift+I/J/C/U
+  document.addEventListener("keydown", function(e) {
+    if (
+      e.key === "F12" || 
+      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+      (e.ctrlKey && e.key.toUpperCase() === "U")
+    ) {
+      e.preventDefault();
+      alert("This action is disabled.");
+    }
+  });
   
   
-  //   setInterval(function() {
-  //   const start = performance.now();
-  //   debugger;
-  //   const end = performance.now();
-  //   if (end - start > 100) {
-  //     window.location.href = "about:blank";
-  //   }
-  // }, 1000);
+    setInterval(function() {
+    const start = performance.now();
+    debugger;
+    const end = performance.now();
+    if (end - start > 100) {
+      window.location.href = "about:blank";
+    }
+  }, 1000);
 
 
 
