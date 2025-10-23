@@ -288,7 +288,7 @@
   padding: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 100;
-  display: flex;
+  display: none;
   margin-left: -45px;
   flex-wrap: wrap;
   gap: 6px; /* spacing between emojis */
@@ -413,7 +413,6 @@
   .overlay-body {
   padding: 15px;
   margin-top: 40px;
-  overflow-y: auto;
 }
 
   #userList {
@@ -430,7 +429,7 @@
 
   .chatHeader {
     font-size: 18px;
-    padding: 12px;
+    padding: 7px;
   }
 
 
@@ -516,6 +515,7 @@
     bottom: 0;
     width: 100%;
     font-size: 20px;
+    height: 20px;
     z-index: 10000;
   }
 
@@ -613,6 +613,59 @@
       margin-top: -10px;
       margin-bottom: 5px;
     }
+
+
+
+
+
+
+
+      #login, #chat {
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+  }
+
+  #login {
+    justify-content: center;
+    align-items: center;
+    background: #282c34;
+    color: #fff;
+    padding: 20px; /* add some padding for smaller screens */
+  }
+
+.login-box input,
+.login-box button {
+  padding: 10px 14px;           /* slightly larger padding for better touch */
+  width: 200px;                  /* slightly wider for readability */
+  margin-top: 8px;               /* balanced spacing */
+  font-size: 15px;               /* modern font size */
+  border: 1px solid #6c63ff;    /* stylish purple border */
+  outline: none;                 /* remove default outline */
+  transition: all 0.3s ease;    /* smooth hover/focus transitions */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* subtle shadow for depth */
+  background-color: #f5f5f5;    /* light background for inputs */
+}
+
+/* Input focus effect */
+.login-box input:focus {
+  border-color: #ff6b6b;        /* accent color on focus */
+  box-shadow: 0 0 8px rgba(255,107,107,0.4);
+}
+
+/* Button styling */
+.login-box button {
+  background-color: #6c63ff;    /* unique vibrant button color */
+  color: #fff;                  /* white text */
+  font-weight: 600;             /* slightly bold */
+  cursor: pointer;              /* pointer on hover */
+}
+
+.login-box button:hover {
+  background-color: #574fd6;    /* darker shade on hover */
+  transform: translateY(-2px);  /* subtle lift effect */
+}
+
   }
     
     
@@ -672,8 +725,166 @@
 
 
 
+/* Fullscreen dark overlay */
+  #settingsOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  /* Settings box */
+  .overlay-box {
+    width: 360px;
+    background: rgba(17,24,39,0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+    color: white;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.96);}
+    to {opacity: 1; transform: scale(1);}
+  }
+
+  /* Header section */
+  .overlay-header-settings{
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .overlay-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #60a5fa;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  /* Body content */
+  .overlay-body {
+    padding: 20px;
+  }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* Center box */
+  .theme-box {
+    background: rgba(255,255,255,0.1);
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    transition: background 0.5s ease;
+  }
+
+
+
+  .theme-box h2 {
+    color: #fff;
+    margin-bottom: 18px;
+    font-size: 22px;
+  }
+
+  #themeSelect {
+    padding: 17px 18px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    background: rgba(255,255,255,0.2);
+    text-align: center;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    min-width: 180px;
+    margin-left: 70px;
+  }
+
+  #themeSelect:hover {
+    background: rgba(255,255,255,0.3);
+  }
+
+  #themeSelect option {
+    color: black;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   </style>
 </head>
 <body>
@@ -683,7 +894,64 @@
     <h2>TalkWithPeoples</h2>
     <input type="text" id="username" placeholder="Enter your name" />
     <button id="loginBtn">Join Chat</button>
-    <p id="loginError" style="color: #ff6b6b;"></p>
+    <p id="loginError" style="color: #ff6b6b;"></p><hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="text-align:center; margin-top:50px;">
+  <!-- Trigger the modal with a button -->
+  <button type="button" 
+          style="padding:10px 14px; font-weight: 100;  float: left; font-size:18px; border:1px solid #6c63ff;  background-color:#574fd6; color:#fff; cursor:pointer;" 
+          onclick="document.getElementById('twModal').style.display='block'">
+    Contact Us
+  </button>
+
+  <!-- Modal -->
+  <div id="twModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.6);">
+    
+    <div style="background-color:#fff; color:#333; margin:10% auto; padding:25px 30px; border-radius:12px; width:90%; max-width:400px; position:relative; text-align:left; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
+      
+      <!-- Modal Header -->
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ccc; padding-bottom:10px;">
+        <h4 style="margin:0;">Contact Us</h4>
+        <span style="font-size:22px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('twModal').style.display='none'">&times;</span>
+      </div>
+      
+      <!-- Modal Body -->
+      <div style="margin-top:15px;">
+        <p style="line-height:1.5; font-size:16px;">
+          If you have any enquiries, feedback, or face any issues related to our website, please contact us at 
+          <a href="mailto:talkwithpeoples.live@gmail.com" style="color:#574fd6;">talkwithpeoples.live@gmail.com</a>. 
+          You can directly send your reports, suggestions, or questions, and we will try our best to respond as soon as possible. 
+          Your feedback is very important to us and helps us improve our service.
+        </p>
+      </div>
+      
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
   </div>
 </div>
 
@@ -696,6 +964,13 @@
 <div id="chat">
   <div id="chatContainer">
     <div id="chatArea">
+
+
+
+
+
+
+      
 
 
 
@@ -731,11 +1006,31 @@
 
 
 
+
+
+
+
+
+
+
               <!-- Mobile Navbar -->
 <div id="mobileNavbar">
   <button class="mobile-nav-btn" onclick="toggleUsers()">👥 Users</button>
   <button class="mobile-nav-btn" onclick="openSettings()">⚙️ Settings</button>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -749,17 +1044,17 @@
     <b>International Chat Room 💬</b>
   </button>
   
-  <button onclick="window.open('Rooms/ChenniKhenni.html', '_blank')">
+  <!-- <button onclick="window.open('Rooms/ChenniKhenni.html', '_blank')">
     Chenni Khenni 🍬😂
-  </button>
+  </button> -->
   
   <button onclick="window.open('Rooms/MemesOnly.html', '_blank')">
     Memes Only 🤣📸
   </button>
   
-  <button onclick="window.open('Rooms/NimbuMirchi.html', '_blank')">
+  <!-- <button onclick="window.open('Rooms/NimbuMirchi.html', '_blank')">
     Nimbu Mirchi 🌶🍋
-  </button>
+  </button> -->
 </div>
 
 
@@ -847,6 +1142,35 @@
   </div>
   <div class="overlay-body" id="overlayUsers"></div>
 </div>
+
+
+
+
+<!-- SETTINGS OVERLAY -->
+<div id="settingsOverlay">
+  <div class="overlay-box">
+    <div class="overlay-header-settings">
+      <span class="overlay-title">⚙️ Settings</span>
+      <button class="close-btn" onclick="closeSettingsOverlay()">×</button>
+    </div>
+
+    <div class="overlay-body" id="overlaySettings">
+      <!-- Settings content will appear here -->
+      <h3 style="margin-bottom:10px; text-align: center;">Change Theme</h3>
+      <select id="themeSelect" onchange="changeTheme(this.value)" style="padding:8px;border-radius:6px;">
+        <option value="default">Default</option>
+        <option value="nature">🌿 Nature</option>
+        <option value="sunset">🌅 Sunset</option>
+        <option value="city">🌆 City</option>
+        <option value="ocean">🌊 Ocean</option>
+      </select>
+      <hr style="margin:15px 0;border-color:rgba(255,255,255,0.1)">
+      <!-- <h3 style="margin-bottom:10px;">Profile Settings</h3>
+      <input type="text" placeholder="Enter Username" style="padding:8px;border-radius:6px;width:100%;margin-bottom:10px;">
+      <button onclick="saveSettings()" style="padding:8px 14px;border:none;border-radius:6px;background:#3b82f6;color:white;cursor:pointer;">Save</button> -->
+    </div>
+  </div>
+</div>
   
   
   
@@ -889,6 +1213,16 @@ function autoScroll() {
 
 // After appendMessage(data...)
 autoScroll();
+
+
+
+
+
+
+
+
+
+
 
 
 let currentUser = '';
@@ -1153,7 +1487,32 @@ emojiBtn.onclick = (e) => {
   
   
   
+
   const customMenu = document.getElementById("customMenu");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   // // Show custom menu on right click
   // document.addEventListener("contextmenu", function (e) {
@@ -1163,17 +1522,47 @@ emojiBtn.onclick = (e) => {
   //   customMenu.style.display = "block";
   // });
 
-  // Hide menu on click elsewhere
-  document.addEventListener("click", function () {
-    customMenu.style.display = "none";
-  });
 
-  // Optional: hide on Escape key
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      customMenu.style.display = "none";
-    }
-  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // // Hide menu on click elsewhere
+  // document.addEventListener("click", function () {
+  //   customMenu.style.display = "none";
+  // });
+
+  // // Optional: hide on Escape key
+  // document.addEventListener("keydown", function (e) {
+  //   if (e.key === "Escape") {
+  //     customMenu.style.display = "none";
+  //   }
+  // });
   
   
   
@@ -1202,6 +1591,12 @@ document.getElementById('closeEmojiPicker').onclick = (e) => {
   emojiPicker.style.display = 'none';
 };
 
+
+
+
+
+
+
 function toggleUsers() {
   const overlay = document.getElementById('userOverlay');
   const overlayUsers = document.getElementById('overlayUsers');
@@ -1211,20 +1606,141 @@ function toggleUsers() {
   overlay.style.display = 'flex';
 }
 
-function closeUserOverlay() {
-  document.getElementById('userOverlay').style.display = 'none';
-}
-function insertAtCursor(textarea, emoji) {
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const textBefore = textarea.value.substring(0, start);
-  const textAfter = textarea.value.substring(end);
 
-  textarea.value = textBefore + emoji + textAfter;
-  textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
-  textarea.focus();
-  resizeInput(); // Optional: resize after emoji is added
-}
+
+
+
+ function openSettings() {
+    const overlay = document.getElementById('settingsOverlay');
+    const overlaySettings = document.getElementById('overlaySettings');
+    overlaySettings.innerHTML = `
+      <h3 style="margin-bottom:10px;">Theme Settings</h3>
+      <select id="themeSelect" onchange="changeTheme(this.value)" style="padding:8px;border-radius:6px;">
+        <option value="default">Default</option>
+        <option value="nature">🌿 Nature</option>
+        <option value="sunset">🌅 Sunset</option>
+        <option value="city">🌆 City</option>
+        <option value="ocean">🌊 Ocean</option>
+      </select>
+      <hr style="margin:15px 0;border-color:rgba(255,255,255,0.1)">
+      <h3 style="margin-bottom:10px;">Account Settings</h3>
+      <input type="text" placeholder="Enter Username" style="padding:8px;border-radius:6px;width:100%;margin-bottom:10px;">
+      <button onclick="saveSettings()" style="padding:8px 14px;border:none;border-radius:6px;background:#3b82f6;color:white;cursor:pointer;">Save</button>
+    `;
+
+    overlay.style.display = 'flex';
+  }
+
+  function closeSettingsOverlay() {
+    document.getElementById('settingsOverlay').style.display = 'none';
+  }
+
+  function saveSettings() {
+    alert("Settings saved!");
+  }
+
+  // Optional: change background theme
+  const themes = {
+    default: "linear-gradient(135deg, #1f2937, #0f172a)",
+    nature: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1600&auto=format&fit=crop')",
+    sunset: "url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1600&auto=format&fit=crop')",
+    city: "url('https://images.unsplash.com/photo-1493244040629-496f6d136cc8?q=80&w=1600&auto=format&fit=crop')",
+    ocean: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop')"
+  };
+
+  function changeTheme(value) {
+    document.body.style.background = themes[value];
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function openSettings() {
+    document.getElementById('settingsOverlay').style.display = 'flex';
+  }
+
+  function closeSettingsOverlay() {
+    document.getElementById('settingsOverlay').style.display = 'none';
+  }
+
+  function saveSettings() {
+    alert("Settings saved!");
+  }
+
+
+
+  function changeTheme(value) {
+    document.body.style.background = themes[value];
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+  }
+
+  function changeTheme(value) {
+    document.body.style.background = themes[value];
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   
@@ -1276,7 +1792,15 @@ function toggleDropdown() {
 
 
 
+ // ✅ Function to open the overlay
+  function openUserOverlay() {
+    document.getElementById('userOverlay').style.display = 'flex';
+  }
 
+  // ✅ Function to close the overlay
+  function closeUserOverlay() {
+    document.getElementById('userOverlay').style.display = 'none';
+  }
 
 
 
