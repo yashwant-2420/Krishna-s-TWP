@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalktoPeoples</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+
+    header {
+      background-color: #0f172a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      flex-wrap: nowrap;
+      /* Prevent logo and nav from wrapping prematurely */
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 1px;
+      z-index: 20;
+      /* Keep logo above mobile menu */
+    }
+
+    /* --- Desktop Navigation Styles (Default) --- */
+    .nav-container {
+      display: flex;
+      align-items: center;
+    }
+
+    nav {
+      display: flex;
+      /* Display as row on desktop */
+      align-items: center;
+      gap: 1rem;
+    }
+
+    nav a,
+    .menu-btn {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      background-color: #4f46e5;
+      border: none;
+      /* Add for menu-btn consistency */
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    nav a:hover,
+    .menu-btn:hover {
+      background-color: #7c3aed;
+    }
+
+    /* Hide hamburger button by default on desktop */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.7rem;
+      cursor: pointer;
+      z-index: 20;
+      /* Keep hamburger above mobile menu */
+    }
+
+    /* --- Mobile Navigation Styles --- */
+    @media (max-width: 768px) {
+      .header-top {
+        padding: 0.5rem 0;
+        /* Adjust padding for better look on small screens */
+      }
+
+      /* Show hamburger button on mobile */
+      .hamburger-btn {
+        display: block;
+      }
+
+      /* Hide the standard navigation on mobile by default */
+      .nav-container {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        /* Full screen height */
+        background-color: #0f172a;
+        /* Same background as header */
+        padding-top: 6rem;
+        /* Space below the logo/hamburger area */
+        z-index: 10;
+        /* For the slide-down effect */
+        transform: translateY(-100%);
+        transition: transform 0.4s ease-out;
+      }
+
+      /* Show the menu when the 'open' class is active */
+      .nav-container.open {
+        display: flex;
+        transform: translateY(0);
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      nav a,
+      .menu-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Existing styles below (with minor tweaks for mobile layout consistency) */
+
+    .header-join-banner {
+      background: linear-gradient(to right, #4f46e5, #7c3aed);
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+      border-radius: 0.75rem;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Existing styles (Default - Desktop/Large Screen) */
+    .header-join-banner button {
+      background: none;
+      color: #fff;
+      border: none;
+      font-size: 1.7rem;
+      /* Desktop size */
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .header-join-banner button small {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    /* Existing styles (Default - Desktop/Large Screen) */
+    .header-join-banner button {
+      background: none;
+      color: #fff;
+      border: none;
+      font-size: 1.7rem;
+      /* Desktop size */
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .header-join-banner button small {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+@media (max-width: 768px) {
+    .header-join-banner {
+        padding: 0.5rem 0.5rem;
+    }
+
+    .header-join-banner button {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .header-join-banner button small {
+        font-size: 0.7rem;
+        font-weight: 400;
+    }
+}
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal.show {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: #fff;
+      margin: 0;
+      padding: 40px 20px;
+      width: 100%;
+      height: 70vh;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      position: absolute;
+      /* Changed from relative for full width */
+      bottom: 0;
+      /* Stick to the bottom */
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      animation: slideUp 0.3s ease-out;
+      /* New animation */
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    @media (min-width: 769px) {
+      .modal-content {
+        width: 80%;
+        /* Widen on desktop */
+        max-width: 600px;
+        margin: 10% auto;
+        height: auto;
+        position: relative;
+        animation: slideDown 0.3s ease-out;
+        border-radius: 8px;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+
+    .close {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      color: #2d3e50;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-content h2 {
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .modal-content a {
+      display: inline-block;
+      text-decoration: none;
+      color: #2d3e50;
+      padding: 12px 18px;
+      width: calc(33.33% - 20px);
+      text-align: left;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    @media (max-width: 600px) {
+      .modal-content a {
+        width: calc(50% - 15px);
+        /* Two columns on smaller mobile */
+      }
+    }
+
+    @media (max-width: 400px) {
+      .modal-content a {
+        width: 100%;
+        /* Single column on very small mobile */
+      }
+    }
+
+    .modal-content a:hover {
+      background: #f1f1f1;
+    }
+
+
+    /* ... (rest of your existing styles) ... */
+
+
+    section {
+      padding: 60px 20px;
+      max-width: 1165px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    section p,
+    section li {
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    .features,
+    .steps,
+    .use-cases,
+    .faq,
+    .roadmap,
+    .testimonials {
+      margin-top: 40px;
+    }
+
+    .feature-list,
+    .step-list,
+    .use-case-list,
+    .roadmap-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .feature,
+    .step,
+    .use-case,
+    .roadmap-item {
+      flex: 1 1 calc(50% - 30px);
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature strong,
+    .step strong,
+    .use-case strong,
+    .roadmap-item strong {
+      color: #007bff;
+    }
+
+    blockquote {
+      background: #fff;
+      border-left: 4px solid #007bff;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      color: #555;
+    }
+
+    footer {
+      background: #222;
+      color: #ccc;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 80px;
+    }
+
+    footer a {
+      color: #17a2b8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">🌐 TalktoPeoples</div>
+
+      <button class="hamburger-btn" id="hamburger" onclick="toggleMobileMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="nav-container" id="navContainer">
+        <nav>
+          <a href="/Contact/contact.html">Contact Us</a>
+          <button class="menu-btn" onclick="openModal(); toggleMobileMenu()">Chat Sites</button>
+        </nav>
+      </div>
+
+    </div>
+    <div class="header-join-banner">
+      <a href="GeneralChat.html"><button>🌐️📢 Click Here to Join Global Group Chat Room<br><small>Connect with people
+            worldwide in real time</small></button></a>
+    </div>
+  </header>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Chat Rooms by Country</h2>
+
+      <a href="/ChatRooms/India.html">
+        <img src="https://flagcdn.com/w40/in.png" width="20"> 🇮🇳 India
+      </a>
+      <a href="ChatRooms/USA.html">
+        <img src="https://flagcdn.com/w40/us.png" width="20"> 🇺🇸 USA
+      </a>
+      <a href="/ChatRooms/UK.html">
+        <img src="https://flagcdn.com/w40/gb.png" width="20"> 🇬🇧 United Kingdom
+      </a>
+      <a href="/ChatRooms/Canada.html">
+        <img src="https://flagcdn.com/w40/ca.png" width="20"> 🇨🇦 Canada
+      </a>
+      <a href="/ChatRooms/Germany.html">
+        <img src="https://flagcdn.com/w40/de.png" width="20"> 🇩🇪 Germany
+      </a>
+      <a href="/ChatRooms/France.html">
+        <img src="https://flagcdn.com/w40/fr.png" width="20"> 🇫🇷 France
+      </a>
+      <a href="/ChatRooms/Brazil.html">
+        <img src="https://flagcdn.com/w40/br.png" width="20"> 🇧🇷 Brazil
+      </a>
+      <a href="/ChatRooms/Japan.html">
+        <img src="https://flagcdn.com/w40/jp.png" width="20"> 🇯🇵 Japan
+      </a>
+      <a href="/ChatRooms/Russia.html">
+        <img src="https://flagcdn.com/w40/ru.png" width="20"> 🇷🇺 Russia
+      </a>
+      <a href="/ChatRooms/Italy.html">
+        <img src="https://flagcdn.com/w40/it.png" width="20"> 🇮🇹 Italy
+      </a>
+    </div>
+  </div>
+
+
+  <div id="copyPopup">
+
+    <div class="bar-container">
+      <div class="progress-bar" id="countdownBar"></div>
+    </div>
+  </div>
+
+  <div id="loaderOverlay">
+    <div class="spinner"></div>
+  </div>
+
+
+  <section class="features" id="features">
+    <h2>🌟 What Makes Us Unique</h2>
+    <div class="feature-list">
+      <div class="feature"><strong>No Login Needed</strong> – Just click and start talking. Simple as that.</div>
+      <div class="feature"><strong>End-to-End Encrypted</strong> – Powered by WebRTC. Secure & private.</div>
+      <div class="feature"><strong>Cross-Device</strong> – Works beautifully on mobile, tablet, and desktop.</div>
+      <div class="feature"><strong>Anonymous By Default</strong> – No personal info needed.</div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <h2>🚀 How It Works</h2>
+    <div class="step-list">
+      <div class="step"><strong>1.</strong> Choose your chat mode – Text, Voice, or Video.</div>
+      <div class="step"><strong>2.</strong> Instantly match with a real human from anywhere in the world.</div>
+      <div class="step"><strong>3.</strong> Converse freely with zero pressure.</div>
+      <div class="step"><strong>4.</strong> Disconnect anytime. Talk again later.</div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>❓ Frequently Asked Questions</h2>
+    <p><strong>Is TalktoPeoples anonymous?</strong><br>Yes! We don’t collect your data or track conversations.</p>
+    <p><strong>Is it safe?</strong><br>Yes. Peer-to-peer encrypted. No middleman.</p>
+    <p><strong>Do I need to download anything?</strong><br>Nope! It works 100% in your browser.</p>
+    <p><strong>Can I choose who I chat with?</strong><br>Soon! We're launching interest and language filters.</p>
+  </section>
+
+  <section class="roadmap">
+    <h2>🚧 What’s Coming Soon?</h2>
+    <div class="roadmap-list">
+      <div class="roadmap-item">✔️ Topic-based public chat rooms</div>
+      <div class="roadmap-item">✔️ Gender/language matching filters</div>
+      <div class="roadmap-item">✔️ Anonymous audio therapy rooms</div>
+      <div class="roadmap-item">✔️ Daily conversation prompts</div>
+      <div class="roadmap-item">✔️ Android & iOS apps</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Made with ❤️ by <strong id="owner-name">Yashwant Singh (Krishna)</strong></p>
+    <p>
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms & Conditions</a> |
+      <a href="#">Contact Us</a>
+    </p>
+  </footer>
+
+  <script>
+    // Function to toggle the mobile menu visibility
+    function toggleMobileMenu() {
+      const navContainer = document.getElementById("navContainer");
+      const hamburgerIcon = document.getElementById("hamburger").querySelector('i');
+
+      navContainer.classList.toggle("open");
+
+      // Toggle the icon between bars and close (optional, but good UX)
+      if (navContainer.classList.contains("open")) {
+        hamburgerIcon.classList.remove('fa-bars');
+        hamburgerIcon.classList.add('fa-xmark');
+      } else {
+        hamburgerIcon.classList.remove('fa-xmark');
+        hamburgerIcon.classList.add('fa-bars');
+      }
+    }
+
+    // Functions for Modal and Popup (kept your originals with slight modifications)
+    function openModal() {
+      document.getElementById("myModal").classList.add("show");
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").classList.remove("show");
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById("myModal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Ensure the menu closes if 'Chat Sites' is clicked in mobile view
+    document.querySelector('.menu-btn').onclick = function () {
+      openModal();
+      // Check if the menu is open and close it after the modal opens
+      if (document.getElementById("navContainer").classList.contains("open")) {
+        toggleMobileMenu();
+      }
+    };
+
+    function copySiteLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        showPopup();
+      }).catch(err => {
+        alert("Copy failed: " + err);
+      });
+    }
+
+    function showPopup() {
+      const popup = document.getElementById("copyPopup");
+      const bar = document.getElementById("countdownBar");
+      bar.style.animation = 'none';
+      bar.offsetHeight;
+      bar.style.animation = null;
+      popup.style.display = "block";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 5000);
+    }
+
+    // ... (your existing loader script) ...
+  </script>
+</body>
+
+</html>
